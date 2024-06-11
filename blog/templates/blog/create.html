@@ -1,0 +1,37 @@
+<!-- django default render is post_create.html 
+	UpdateView and Create View use this
+-->
+{% extends 'blog/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST" enctype='multipart/form-data'>
+            {% csrf_token %}
+			<fieldset class="form-group">
+				<legend class="border-bottom mb-4">Blog Post</legend>
+				{{ form|crispy }}
+			</fieldset>
+			<div class="form-group mt-4 mb-2">
+				<button type="submit" class="btn btn-outline-info">Create Post</button>
+			</div>
+        </form>
+    </div>
+{% endblock content %}
+
+{% block samping %}
+<div class="content-section">
+    <h3 class="pt-2 pb-2">Side Navigation</h3>
+
+    <ul class="list-group">
+        {% if user.is_authenticated %}
+            <div>
+                <a class="nav-item nav-link bg-info p-2 text-white text-center mb-3"
+                    href="{% url 'profile' %}">Profile</a>
+            </div>
+            <div>
+                <a class="nav-item nav-link bg-danger p-2 text-white text-center mb-3" href="{% url 'logout' %}">Logout</a>
+            </div>
+        {% endif %}
+    </ul>
+</div>
+{% endblock samping %}

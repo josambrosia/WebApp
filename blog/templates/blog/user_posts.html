@@ -1,0 +1,68 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+    <div class="ctg">
+        <h4>Posts by {{ view.kwargs.username }}, Total : {{ page_obj.paginator.count }} Post(s)</h4>
+    </div>
+    {% for post in posts %}
+        <article class="media content-section">
+            <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+            <div class="media-body">
+                <div class="article-metadata">
+                <a class="mr-2" href="{% url 'blog:user-posts' post.author.username %}">{{ post.author }}</a>
+                <small class="text-muted">{{ post.date_posted|date:"d F Y" }}</small>
+                </div>
+                <h2><a class="article-title" href="{% url 'blog:post-detail' post.id %}">{{ post.title }}</a></h2>
+                <p class="article-content">{{ post.content }}</p>
+            </div>
+        </article>
+    {% endfor %}
+
+    <!-- PAGINATOR -->
+    {% if is_paginated %}
+        {% if page_obj.has_previous %}
+            <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+            <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Prev</a>
+        {% endif %}
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+            {% elif num > page_obj.number|add:'-2' and num < page_obj.number|add:'2' %}
+                <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+        {% endif %}
+    {% endif %}
+{% endblock content %}
+
+{% block samping %}
+<div class="content-section">
+    <h3 class="pt-2 pb-2">Side Navigation</h3>
+
+    <ul class="list-group">
+        {% if user.is_authenticated %}
+            <div>
+                <a class="nav-item nav-link bg-info p-2 text-white text-center mb-3"
+                    href="{% url 'profile' %}">Profile</a>
+            </div>
+            <div>
+                <a class="nav-item nav-link bg-primary p-2 text-white text-center mb-3"
+                    href="{% url 'blog:post-create' %}">Create Post</a>
+            </div>
+            <div>
+                <a class="nav-item nav-link bg-danger p-2 text-white text-center mb-3" href="{% url 'logout' %}">Logout</a>
+            </div>
+        {% else %}
+            <div>
+                <a class="nav-item nav-link bg-info p-2 text-white text-center mb-3"
+                    href="{% url 'register' %}">Register</a>
+            </div>
+            <div>
+                <a class="nav-item nav-link bg-primary p-2 text-white text-center mb-3" href="{% url 'login' %}">Login</a>
+            </div>
+        {% endif %}
+    </ul>
+</div>
+{% endblock samping %}

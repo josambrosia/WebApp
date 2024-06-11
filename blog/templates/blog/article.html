@@ -1,0 +1,56 @@
+<!-- django default render is post_create.html 
+	PostDetailView uses this
+-->
+{% extends 'blog/base.html' %}
+{% block content %}
+    <article class="media content-section">
+        <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+        <div class="media-body">
+            <div class="article-metadata">
+                <a class="mr-2" href="{% url 'blog:user-posts' post.author.username %}">{{ post.author }}</a>
+                <small class="text-muted">{{ post.date_posted|date:"d F Y" }}</small>
+            </div>
+            <h2 class="article-title">{{ post.title }}</h2>
+            {% if object.image.url != "/media/default.jpg" %}
+                <img style="width:50%; height:auto;" class="img-responsive" src="{{ post.image.url }}">
+            {% endif %}
+            <p class="article-content">{{ post.content }}</p>
+        </div>
+        {% if post.author == user %}
+        <div>
+            <a class="btn btn-danger btn-sm" href="{% url 'blog:post-delete' post.id %}">Delete</a>
+            <a class="btn btn-secondary btn-sm" href="{% url 'blog:post-update' post.id %}">Update</a>
+        </div>
+        {% endif %}
+    </article>
+{% endblock content %}
+
+{% block samping %}
+<div class="content-section">
+    <h3 class="pt-2 pb-2">Side Navigation</h3>
+
+    <ul class="list-group">
+        {% if user.is_authenticated %}
+            <div>
+                <a class="nav-item nav-link bg-primary p-2 text-white text-center mb-3"
+                    href="{% url 'profile' %}">Profile</a>
+            </div>
+            <div>
+                <a class="nav-item nav-link bg-primary p-2 text-white text-center mb-3"
+                    href="{% url 'blog:post-create' %}">Create Post</a>
+            </div>
+            <div>
+                <a class="nav-item nav-link bg-danger p-2 text-white text-center mb-3" href="{% url 'logout' %}">Logout</a>
+            </div>
+        {% else %}
+            <div>
+                <a class="nav-item nav-link bg-info p-2 text-white text-center mb-3"
+                    href="{% url 'register' %}">Register</a>
+            </div>
+            <div>
+                <a class="nav-item nav-link bg-primary p-2 text-white text-center mb-3" href="{% url 'login' %}">Login</a>
+            </div>
+        {% endif %}
+    </ul>
+</div>
+{% endblock samping %}
