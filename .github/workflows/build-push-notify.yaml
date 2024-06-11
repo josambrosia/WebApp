@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag webapp:$(GITHUB_SHA) 
+      run: docker build --file Dockerfile --tag webapp:${{ github.sha }} . 
 
     - name: Login Docker Hub
       run: docker login --username josaphatyoga --password ${{ secrets.DOCKER_TOKEN }}
