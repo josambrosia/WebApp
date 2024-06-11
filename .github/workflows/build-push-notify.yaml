@@ -21,7 +21,7 @@ jobs:
       run: docker login --username josaphatyoga --password ${{ secrets.DOCKER_TOKEN }}
 
     - name: Push Image to Docker Image Registry 
-      run: docker push webapp:${{ github.sha }}
+      run: docker push josaphatyoga/webapp:${{ github.sha }}
 
   notify: 
     runs-on: ubuntu-latest
