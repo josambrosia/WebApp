@@ -32,6 +32,6 @@ jobs:
         env:
         DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_URL }}
         run: |
-        curl -H "Content-Type: application/json" -d '{"content": "Image telah berhasil dibuild dan dipush ke Docker Image Registry, Ndoro"}' $DISCORD_WEBHOOK_URL
+          curl -H "Content-Type: application/json" -d '{"content": "Image telah berhasil dibuild dan dipush ke Docker Image Registry, Ndoro"}' $DISCORD_WEBHOOK_URL
     
     
