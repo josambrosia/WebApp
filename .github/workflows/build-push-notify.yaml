@@ -5,6 +5,8 @@ on:
     branches: [ "dev" ]
   pull_request:
     branches: [ "main" ]
+    types:
+      - closed
 
 jobs:
 
@@ -34,7 +36,9 @@ jobs:
 
   build-and-push-prod:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    #Di bawah ini merupakan conditioning apabila dev dimerge ke prod/main
+    if: |
+      github.ref == 'refs/heads/main' && github.event.pull_request.merged == true 
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
