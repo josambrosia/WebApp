@@ -11,6 +11,8 @@ on:
 jobs:
 
   build-and-push-dev:
+  #Hanya akan jalan jika ada event di branch dev
+    if: github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
