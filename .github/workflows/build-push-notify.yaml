@@ -44,7 +44,7 @@ jobs:
         git config user.name "GitHub Actions Bot"
         git config user.email "banuthecreator@gmail.com"
         git add -A
-        git commit -m"commit from github action ${{ github.sha }}-dev
+        git commit -m"commit from github action ${{ github.sha }}-dev"
         git push
 
 
