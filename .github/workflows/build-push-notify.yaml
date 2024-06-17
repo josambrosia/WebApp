@@ -31,11 +31,21 @@ jobs:
         # Default: ${{ github.repository }}
         repository: 'josambrosia/Webbapp-Manifest'
         token: ${{ secrets.MANIFEST_REPO_TOKEN }}
+
+        
     - name: aku ingin melihat ada dimans?
       run: pwd && ls
     
     - name: Change Image Tags in Manifest [Dev]
       run: sed -i 's/\(image:.*:\).*/\1${{ github.sha }}-dev/' manifest/dev/deployment.yaml 
+
+    - name: Commit & push to Manifest Repo
+      run: |
+        git config user.name "GitHub Actions Bot"
+        git config user.email "banuthecreator@gmail.com"
+        git add -A
+        git commit -m"commit from github action ${{ github.sha }}-dev
+        git push
 
 
   notify-dev: 
