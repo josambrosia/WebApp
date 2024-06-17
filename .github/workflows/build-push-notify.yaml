@@ -24,6 +24,19 @@ jobs:
 
     - name: Push Image to Docker Image Registry 
       run: docker push josaphatyoga/webapp:${{ github.sha }}-dev
+      
+    - uses: actions/checkout@v4
+      with:
+        # Repository name with owner. For example, actions/checkout
+        # Default: ${{ github.repository }}
+        repository: 'josambrosia/Webbapp-Manifest'
+        token: ${{ secrets.MANIFEST_REPO_TOKEN }}
+    - name: aku ingin melihat ada dimans?
+      run: pwd && ls
+    
+    - name: Change Image Tags in Manifest [Dev]
+      run: sed -i 's/\(image:.*:\).*/\1${{ github.sha }}-dev/' manifest/dev/deployment.yaml 
+
 
   notify-dev: 
     runs-on: ubuntu-latest
